@@ -1,0 +1,6 @@
+file_name,source,type
+opportunity,SFDC,cdc
+opportunity_stage,SFDC,full
+quota,csv,full
+lead,SFDC,cdc
+event,SFDC,incremental
