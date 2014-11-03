@@ -99,17 +99,25 @@ puts 'What would you like to do?
 
   	files.each do |files|
   		p files #<CSV::Row "Name:"Dan"...
-  		srcSQLFile = 'src_' + files['source'] + '_' + files['file_name'] + '_truncate_reload' + '.sql';
-  			puts srcSQLFile;
-  		tempSQLFile = 'temp_' + files['source'] +  '_' + files['file_name'] + '_cdc' + '.sql';
-  			puts tempSQLFile;
-  		stgSQLFile = 'stg_' + files['source'] + '_' + files['file_name'] + '_merge' + '.sql';
-  			puts stgSQLFile;
 
-  		puts 'project directory =>' +  Dir.pwd;
-		File.new('sql/src/' + srcSQLFile,'w');
-		File.new('sql/temp/' + tempSQLFile,'w');
-		File.new('sql/stg/'  + stgSQLFile,'w');
+  		 	srcSQLFile = 'src_' + files['source'] + '_' + files['file_name'] + '_truncate_reload' + '.sql';
+  			tempSQLFile = 'temp_' + files['source'] +  '_' + files['file_name'] + '_cdc' + '.sql';
+  			stgSQLFile = 'stg_' + files['source'] + '_' + files['file_name'] + '_merge' + '.sql';
+  			dwSQLFile = 'dw_' + files['source'] + '_' + files['file_name'] + '_truncate_insert' + '.sql';
+  		case files['type']
+ 			when 'cdc'
+ 					File.new('sql/src/' + srcSQLFile,'w');
+					File.new('sql/temp/' + tempSQLFile,'w');
+					File.new('sql/stg/'  + stgSQLFile,'w');
+					File.new('sql/dw/'  + dwSQLFile,'w');
+ 			when 'incremental'
+ 					File.new('sql/src/' + srcSQLFile,'w');
+					File.new('sql/stg/'  + stgSQLFile,'w');
+					File.new('sql/dw/'  + dwSQLFile,'w');
+ 			when 'full'
+ 					 File.new('sql/src/' + srcSQLFile,'w');
+					File.new('sql/dw/'  + dwSQLFile,'w');
+		end
 	end
 when "4"
 
